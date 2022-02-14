@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>just ace</title>
+    <style>
+      #editor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0; 
+      }
+    </style>
+  </head>
+  <body>
+    <div id="editor">
+C-,:  settings. 
+C-M-h:  keyboardshortcuts. 
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/monokai");
+      editor.getSession().setMode("ace/mode/text");
+      editor.setKeyboardHandler("ace/keyboard/vim");
+      // add command to lazy-load keybinding_menu extension
+      editor.commands.addCommand({
+          name: "showKeyboardShortcuts",
+          bindKey: {win: "Ctrl-Alt-h", mac: "Command-Alt-h"},
+          exec: function(editor) {
+              ace.config.loadModule("ace/ext/keybinding_menu", function(module) {
+                  module.init(editor);
+                  editor.showKeyboardShortcuts()
+              })
+          }
+      })
+
+    </script>
+  </body>
+</html>
